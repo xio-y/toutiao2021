@@ -20,7 +20,7 @@
                         {{news.title}}
                     </div>
                     <div class="time">
-                        <span>{{news.time|dateFilter}}</span>
+                        <span>{{news.time|moment}}</span>
                         <span>{{news.source}}</span>
                     </div>
                 </div>

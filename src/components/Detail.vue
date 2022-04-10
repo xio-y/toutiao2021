@@ -8,7 +8,7 @@
         {{news.title}}
       </div>
       <div class="top">
-        <div class="top-left">
+        <div class="top-left" @click="goAuthorInfo">
           <van-image :src="picIp+news.image" lazy-load height="70" width="70" round/>
           <div class="user">{{news.userName}}</div>
         </div>
@@ -83,7 +83,7 @@ import { Toast } from 'vant';
 import { ImagePreview } from 'vant';
 import { Lazyload } from "vant";
 
-Vue.use(Toast);
+Vue.use(Lazyload);
 Vue.use(Toast)
 export default {
   name: 'Detail',
@@ -107,6 +107,16 @@ export default {
     this.getCommentList();
   },
   methods:{
+    goAuthorInfo(){
+      this.$router.push({
+        name:'AuthorInfo',
+        query:{
+          uid:this.news.uid,
+          userName:this.news.userName,
+          image:this.news.image
+        }
+      });
+    },
     follow(){
       if(this.user==null){
         Toast("未登录，先登录再关注");

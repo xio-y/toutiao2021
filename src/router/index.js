@@ -9,6 +9,8 @@ import SearchResult from '@/components/SearchResult'
 import Detail from '@/components/Detail' 
 import Video from '@/components/Video'
 import Comments from '@/components/Comments'
+import AuthorInfo from '@/components/AuthorInfo'
+import Chat from '@/components/Chat'
 
 Vue.use(Router)
 
@@ -59,5 +61,15 @@ export default new Router({
       name:'Comments',
       component: Comments
     },
+    {
+      path:'/AuthorInfo',
+      name:'AuthorInfo',
+      component: AuthorInfo
+    },
+    {
+      path:'/Chat',
+      name:'Chat',
+      component: Chat
+    }
   ]
 })
