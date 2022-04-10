@@ -23,7 +23,19 @@
             </div>  
             
           </van-list>
-        </van-pull-refresh>    
+        </van-pull-refresh>   
+
+        <div class="comment-input">
+          <van-field
+            v-model="content"
+            clearable
+            placeholder="请输入评论内容"
+            @keyup.enter="send">
+            <template #button>
+              <van-button size="small" type="warning" @click="send">发送</van-button>  
+            </template> 
+          </van-field>
+        </div> 
       </div>
   </div>
 </template>
@@ -32,6 +44,8 @@
 import Vue from 'vue';
 import { Toast } from 'vant';
 import { Lazyload } from "vant";
+import SockJS from 'sockjs-client'
+import Stomp from 'stompjs'
 
 Vue.use(Lazyload);
 Vue.use(Toast)
@@ -46,12 +60,37 @@ export default {
       finished:false,
       refreshing:false,
       pageNo:1,
-      user:JSON.parse(localStorage.getItem("userInfo"))
+      user:JSON.parse(localStorage.getItem("userInfo")),
+      content:'',
+      stompClient:null
     }
   },
   created(){
+    this.connect();
   },
   methods:{
+    connect(){
+      var socket=new SockJS('http://localhost:8080/ws/ep')
+      this.stompClient=Stomp.over(socket)
+      this.stompClient.connect({},success=>{
+        //连接成功 订阅消息
+        this.stompClient.subscribe("/user/"+this.user.username+"/queue/chat",response=>{
+          var msg=JSON.parse(response.body);
+          this.list.push(msg)
+        })
+      })
+    },
+    send(){
+      var msg={
+        fromUser:this.user.username,
+        toUser:this.author.userName,
+        content:this.content,
+        date:new Date()
+      }
+      this.stompClient.send("/chat",{},JSON.stringify(msg))
+      this.list.push(msg)
+      this.content=''
+    },
     onClickLeft(){
       this.$router.go(-1);
     },
@@ -103,5 +142,8 @@ export default {
 }
 .self .content{
   background-color: rgb(214, 218, 230);
+}
+.list{
+  margin-bottom: 55px;
 }
 </style>

@@ -36,8 +36,8 @@
           <div class="digit">0</div>
           <div class="text">粉丝</div>
         </van-col>
-        <van-col span="6">
-          <div class="digit">0</div>
+        <van-col span="6" @click="follow">
+          <div class="digit">99</div>
           <div class="text">关注</div>
         </van-col>
       </van-row>
@@ -149,6 +149,9 @@ export default {
     }
   },
   methods:{
+    follow(){
+      this.$router.push("/Follow")
+    },
     onSubmit(values){
       console.log(values);
       this.axios.post("user/login",this.user).then(response=>{

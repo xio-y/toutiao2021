@@ -11,6 +11,8 @@ import Video from '@/components/Video'
 import Comments from '@/components/Comments'
 import AuthorInfo from '@/components/AuthorInfo'
 import Chat from '@/components/Chat'
+import Follow from '@/components/Follow'
+
 
 Vue.use(Router)
 
@@ -70,6 +72,11 @@ export default new Router({
       path:'/Chat',
       name:'Chat',
       component: Chat
+    },
+    {
+      path:'/Follow',
+      name:'Follow',
+      component: Follow
     }
   ]
 })

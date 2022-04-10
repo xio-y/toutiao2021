@@ -79,3 +79,10 @@
   .top-right{
     line-height: 50px;
   }
+  .comment-input{
+    border-top: 0.5px solid #ddd;
+    position: fixed;
+    left: 0;
+    bottom: 45px;
+    width: 100%;
+  }
