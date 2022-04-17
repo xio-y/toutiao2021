@@ -137,7 +137,7 @@ export default {
         uid:0,
         username:'',
         password:'',
-        image:'default.png'
+        image:'QQ.png'
       }
     }
   },

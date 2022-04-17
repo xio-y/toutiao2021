@@ -16,7 +16,7 @@
          finished-text="没有更多了"
          @load="onload"
         >
-          <div class="card" v-for="item in list" :key="item.newsid" @click="getDetail(item.newsid)">
+          <div class="card" v-for="item in list" :key="item.newsid" @click="getDetail(item.newsId)">
             <div class="card-left">
               <div class="title">{{item.title}}</div>
               <div class="time">
@@ -61,13 +61,13 @@ export default {
         this.list=[];
         this.refreshing=false;
       }
-      this.axios.post("news/getByTitle",{
-        page:this.page,
+      this.axios.post("news/getPageNewsByTitle",{
+        current:this.page,
         title:this.value
       }).then((response) =>{
-        this.list=this.list.concat(response.data.list);
+        this.list=this.list.concat(response.data.records);
         this.loading=false;
-        if(this.page>=response.data.Pages){
+        if(this.page>=response.data.pages){
           this.finished=true;
         }
         this.page++;

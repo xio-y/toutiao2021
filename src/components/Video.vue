@@ -13,7 +13,7 @@
       </van-tabs>
     </div>
     <div class="list kind">
-      <div class="video" v-for="item in list" :key="item.newsid" @click="getDetail(item.newsid)">
+      <div class="video" v-for="item in list" :key="item.newsId" @click="getDetail(item.newsId)">
         <div class="video-top">
           <div class="video">
             <div class="title">{{item.title}}</div>
@@ -57,7 +57,7 @@ export default {
     }
   },
   created(){
-    this.axios.get("kind/getAll").then((response) => {
+    this.axios.get("kind/list").then((response) => {
       this.kindList=response.data;
     })
     this.onClick(0,'');
@@ -65,15 +65,15 @@ export default {
   methods:{
    onClick(name,title){
      console.log(name+','+title);
-     this.axios.get("news/getVideosByKindid?kindid="+(name+1)).then((response) =>{
+     this.axios.get("news/getVideosByKindId?kindId="+(name+1)).then((response) =>{
        this.list=response.data;
      })
    },
    goSearch(){
      this.$router.push("/Search");
    },
-    getDetail(newsid){
-      this.$router.push("/Detail/"+newsid)
+    getDetail(newsId){
+      this.$router.push("/Detail/"+newsId)
     },
   },
 }

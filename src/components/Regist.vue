@@ -5,7 +5,8 @@
     </div>
     <h1>注册</h1>
       <van-form @submit="onSubmit" class="form">
-        <van-field 
+
+       <van-field 
             v-model="user.username"
             name="username" 
             label="用户名"
@@ -34,8 +35,21 @@
             name="email" 
             label="邮箱"
             placeholder="邮箱"
-            :rules="[{validator, required:true,message:'请填写真确的邮箱格式' }]"
+            clearable
+            :rules="[{validator, required:true,message:'请填写正确的邮箱格式' }]"
         />
+        <van-field
+          v-model="user.checkcode"
+          name="checkcode"
+          label="验证码"
+          placeholder="验证码"
+          clearable
+          :rules="[{ required: true, message: '请填写正确的验证码' }]"
+        >
+        <template #button>
+          <van-button type="primary" size="small" @click="sendEmail">发送验证码</van-button>
+        </template>
+        </van-field>
         <van-field name="uploader" label="头像">
           <template #input>
             <van-uploader v-model="uploader" :before-read="beforeRead"/>
@@ -62,7 +76,8 @@ export default {
         username:'',
         password:'',
         password1:'',
-        email:''
+        email:'',
+        checkcode:''
       },
       pattern: /^.{6,20}$/,
       emailPattern: /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/,
@@ -73,6 +88,17 @@ export default {
     
   },
   methods:{
+    sendEmail(){
+      if(this.user.email.trim()==''){
+        Toast.fail('请输入邮箱');
+        return ;
+      }
+      this.axios.post("user/sendMail",{
+        email:this.user.email
+      }).then(response=>{
+
+      })
+    },
     validator(val){
       return  /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/.test(val);
     },

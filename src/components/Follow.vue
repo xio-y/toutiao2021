@@ -16,7 +16,7 @@
         <van-tab title="我关注的"></van-tab>
       </van-tabs>
       <div class="list">
-        <div class="ulist" v-for="item in list" :key="item.uid" @click="chat(item)">
+        <div class="ulist" v-for="item in list" :key="item.uid">
           <div class="ulist-left">
             <van-image :src="picIp+item.image" lazy-load height="60" width="60" round/>
                   <div class="content">
@@ -24,7 +24,8 @@
                   </div>
           </div>
           <div class="ulist-right">
-
+              <van-button type="info" size="small" @click="chat(item)">聊天</van-button>
+              <van-button type="primary" size="small" @click="getInfo(item)">查看详情</van-button>              
           </div>
         </div>
       </div>
@@ -79,6 +80,16 @@ export default {
         }
       })
     },
+    getInfo(item){
+      this.$router.push({
+        name:"AuthorInfo",
+        query:{
+          uid:item.uid,
+          userName:item.usename,
+          image:item.image
+        }
+      })
+    },
     onClickLeft(){
       this.$router.go(-1);
     }
@@ -94,6 +105,7 @@ export default {
 .ulist{
   display: flex;
   margin: 10px 0;
+  justify-content: space-between;
 }
 .ulist .content{
   height: 50px;
@@ -103,5 +115,11 @@ export default {
 }
 .ulist-left{
   display: flex;
+}
+.ulist-right{
+  height: 50px;
+  line-height: 50px;
+  text-align: right;
+  padding:5px 0;
 }
 </style>
