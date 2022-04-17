@@ -73,6 +73,7 @@ export default {
       var socket=new SockJS('http://localhost:8080/ws/ep')
       this.stompClient=Stomp.over(socket)
       this.stompClient.connect({},success=>{
+        
         //连接成功 订阅消息
         this.stompClient.subscribe("/user/"+this.user.username+"/queue/chat",response=>{
           var msg=JSON.parse(response.body);
